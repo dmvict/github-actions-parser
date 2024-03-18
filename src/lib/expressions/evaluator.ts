@@ -152,7 +152,10 @@ export class ExpressionEvaluator extends BaseCstVisitor {
     const contextObject = context.contextProvider.get(contextName as any);
     const result = iteratePath(path, contextObject);
 
-    return result || "";
+    if( result === undefined || result === null )
+    return "";
+    else
+    return result;
   }
 
   contextMember(
