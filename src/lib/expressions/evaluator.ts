@@ -16,6 +16,7 @@ import { PropertyPath, iteratePath } from "../utils/path";
 
 import { ContextProvider } from "./types";
 import { tokenMatcher } from "chevrotain";
+import { evaluateExpression } from "./index";
 
 export interface ExpressionContext {
   contextProvider: ContextProvider;
@@ -240,16 +241,16 @@ export class ExpressionEvaluator extends BaseCstVisitor {
         return Functions.format(parameters[0], ...parameters.slice(1));
 
       case !!ctx.always:
-        return Functions.always();
+        return Functions.always(context);
 
       case !!ctx.failure:
-        return Functions.failure();
+        return Functions.failure(context);
 
       case !!ctx.success:
-        return Functions.success();
+        return Functions.success(context);
 
       case !!ctx.cancelled:
-        return Functions.cancelled();
+        return Functions.cancelled(context);
     }
 
     return undefined;

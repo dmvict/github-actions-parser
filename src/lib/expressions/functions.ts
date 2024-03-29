@@ -1,3 +1,6 @@
+import { ExpressionContext } from "./evaluator";
+import { evaluateExpression } from "./index";
+
 const funcDescription = {
   tojson:
     "Returns a pretty-print JSON representation of `value`. You can use this function to debug the information provided in contexts.",
@@ -59,18 +62,18 @@ export function format(format: string, ...params: string[]): string {
   return format.replace("{{", "{").replace("}}", "}");
 }
 
-export function always(): boolean {
+export function always(_context: ExpressionContext): boolean {
   return true;
 }
 
-export function failure() {
-  return Undetermined;
+export function failure(context: ExpressionContext) {
+  return evaluateExpression( "job.status == 'failure'", context.contextProvider);
 }
 
-export function success() {
-  return Undetermined;
+export function success(context: ExpressionContext) {
+  return evaluateExpression( "job.status == 'success'", context.contextProvider);
 }
 
-export function cancelled() {
-  return Undetermined;
+export function cancelled(context: ExpressionContext) {
+  return evaluateExpression( "job.status == 'cancelled'", context.contextProvider);
 }
