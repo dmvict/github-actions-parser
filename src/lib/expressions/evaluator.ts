@@ -187,8 +187,8 @@ export class ExpressionEvaluator extends BaseCstVisitor {
     path.push(this._coerceValue(p, true));
   }
 
-  logicalGrouping(ctx: any) {
-    return this.visit(ctx.expression);
+  logicalGrouping(ctx: any, context: ExpressionContext) {
+    return this.visit(ctx.expression, context);
   }
 
   array(ctx: any) {

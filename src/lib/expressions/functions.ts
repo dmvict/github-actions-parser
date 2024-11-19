@@ -67,13 +67,13 @@ export function always(_context: ExpressionContext): boolean {
 }
 
 export function failure(context: ExpressionContext) {
-  return evaluateExpression( "job.status == 'failure'", context.contextProvider);
+  return context.contextProvider.get('job') === 'failure';
 }
 
 export function success(context: ExpressionContext) {
-  return evaluateExpression( "job.status == 'success'", context.contextProvider);
+  return context.contextProvider.get('job') === 'success';
 }
 
 export function cancelled(context: ExpressionContext) {
-  return evaluateExpression( "job.status == 'cancelled'", context.contextProvider);
+  return context.contextProvider.get('job') === 'cancelled';
 }

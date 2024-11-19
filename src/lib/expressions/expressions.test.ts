@@ -256,11 +256,11 @@ describe("expression parser", () => {
     });
 
     it("failure", () => {
-      expect(ev("failure()")).toBe(Undetermined);
+      expect(ev("failure()")).toBe(false);
     });
 
     it("success", () => {
-      expect(ev("success()")).toBe(Undetermined);
+      expect(ev("success()")).toBe(false);
     });
   });
 
@@ -307,5 +307,17 @@ describe("expression replacer", () => {
     expect(
       replaceExpressions("abc_${{ secrets.FOO || github.actor }}", ctx)
     ).toBe("abc_Bar");
+  });
+
+  it("execute combined expression", () => {
+      expect(ev("(github.job != 'second') && (github.job == 'first')")).toBe(true);
+      expect(ev("(github.job != 'second') && (github.job != 'first')")).toBe(false);
+  });
+
+  it("execute invalid grouped combined expression", () => {
+      expect(ev("(github.job != 'second') && github.job == 'first'")).toBe(false);
+      expect(ev("(github.job != 'second') && github.job != 'first'")).toBe(true);
+      expect(ev("github.job != 'second' && (github.job == 'first')")).toBe(true);
+      expect(ev("github.job != 'second' && (github.job != 'first')")).toBe(false);
   });
 });

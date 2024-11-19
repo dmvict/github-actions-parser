@@ -49,7 +49,8 @@ export class EditContextProvider implements ContextProvider {
     private workflow: Workflow,
     private path: PropertyPath,
     private secrets: string[] | typeof DynamicContext
-  ) {}
+  ) {
+  }
 
   get(
     context:

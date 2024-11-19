@@ -88,7 +88,7 @@ export function validateExpression(
       contextProvider,
       diagnostics,
       expressionPosition
-    ).visit(cst, {} as ExpressionContext);
+    ).visit(cst, { contextProvider } as ExpressionContext);
 
     return result;
   } catch (e) {
